@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>아레나 서클 · 연습실</title><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<style>
+:root { --wrks-viz-font-family: Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; --wrks-viz-primary: #2563eb; --wrks-viz-bg: #ffffff; --wrks-viz-fg: #111827; --wrks-viz-border: #d1d5db; --wrks-viz-radius: 8px; --wrks-viz-space-1: 4px; --wrks-viz-space-2: 8px; --wrks-viz-space-3: 12px; --wrks-viz-space-4: 16px; }
+*{box-sizing:border-box}body{margin:0;padding:16px;font-family:var(--wrks-viz-font-family);background:#fff;color:#172b35;font-size:14px}button,select,input{font:inherit}button,select{border:1px solid var(--wrks-viz-border);border-radius:6px;background:white;color:#172b35;padding:9px 11px}button{cursor:pointer}button:hover:not(:disabled){background:#edf4f6;border-color:#79949d}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,select:focus-visible,a:focus-visible,[role=button]:focus-visible{outline:3px solid #2563eb;outline-offset:2px}.primary{background:#174e5d;color:white;border-color:#174e5d}.primary:hover:not(:disabled){background:#103b48;color:white}h1{font-size:25px;letter-spacing:-1px;margin:2px 0 5px}h2{font-size:15px;margin:0 0 10px}h3{font-size:14px}p{margin:5px 0;line-height:1.6}.eyebrow{font-size:11px;letter-spacing:1.7px;color:#55717d}header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.toolbar{display:flex;gap:6px;flex-wrap:wrap}.muted{color:#627781;font-size:12px}.notice{padding:9px 12px;border:1px solid #d7e3e8;background:#f4f8fa;border-radius:6px;margin-bottom:12px;font-size:12px;line-height:1.6}.layout{display:grid;grid-template-columns:minmax(380px,1.6fr) minmax(260px,1fr);gap:12px;max-width:1180px;margin:auto}.panel{border:1px solid var(--wrks-viz-border);border-radius:8px;background:white}.boardtop{padding:12px 14px;border-bottom:1px solid var(--wrks-viz-border);display:flex;justify-content:space-between;gap:8px;align-items:center}.tag{font-size:12px;background:#e8f1f4;color:#174e5d;border-radius:4px;padding:4px 7px}.boardwrap{background:#f8fbfc;padding:0 8px}.boardwrap svg{display:block;width:100%;max-height:490px;min-height:300px}.boardbottom{border-top:1px solid var(--wrks-viz-border);padding:10px 12px}.controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.controls label{font-size:12px;display:flex;gap:4px;align-items:center}.side{display:flex;flex-direction:column;gap:10px}.scores{display:grid;grid-template-columns:1fr 1fr;gap:8px}.score{padding:10px 12px;border:1px solid var(--wrks-viz-border);border-radius:6px;background:#fafcfd}.score.active{border:2px solid #1f6478;padding:9px 11px;background:#edf5f7}.score strong{font-size:27px;font-variant-numeric:tabular-nums}.score .name{font-size:12px;margin-bottom:4px}.score .cards{font-size:11px;color:#566f7a}.section{padding:12px}.tokens{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.token{padding:5px 3px;display:flex;flex-direction:column;align-items:center;gap:0;background:#fcfdfd;min-height:74px}.token.selected{border:2px solid #174e5d;padding:4px 2px;background:#eaf3f6}.token svg{width:49px;height:42px}.token span{font-size:11px}.rowhead{display:flex;align-items:center;justify-content:space-between;gap:8px}.full{width:100%}#status{min-height:39px;font-size:13px}#hint{background:#eff5ff;color:#173c75;border:1px solid #bed0f2;padding:8px;border-radius:5px;margin-top:8px;font-size:12px;line-height:1.5}#hint:empty{display:none}#log{height:96px;overflow:auto;font-size:12px;padding:0 0 0 20px;margin:0;line-height:1.8;color:#536976}details{max-width:1180px;margin:12px auto 0;border:1px solid var(--wrks-viz-border);border-radius:6px;padding:10px 12px}summary{cursor:pointer;font-weight:600;font-size:13px}.rulebody{max-height:310px;overflow:auto;margin-top:8px;line-height:1.7;font-size:13px}.rulebody li{margin:4px 0}.rulebody a{color:#245caa}.footer{max-width:1180px;margin:8px auto 0;font-size:11px;color:#6b7f88;display:flex;justify-content:space-between;gap:10px}.overlay{position:fixed;inset:0;background:#172b3566;display:flex;align-items:center;justify-content:center;z-index:5;padding:16px}.modal{width:430px;max-height:90vh;overflow:auto;background:#fff;padding:20px;border:1px solid #8fa7b1;border-radius:8px}.formrow{display:grid;grid-template-columns:130px 1fr;align-items:center;gap:8px;margin:12px 0}.formrow label{font-size:13px}.modal .toolbar{justify-content:flex-end;margin-top:18px}[hidden]{display:none!important}.sr-only{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0)}#board [role=button]{cursor:pointer}#board [role=button]:hover .spot{fill:#c8deff;stroke:#2563eb}#downloadState{font-size:11px;color:#596f79;margin-top:4px}@media(min-width:1250px){header,.notice{max-width:1180px;margin-left:auto;margin-right:auto}}@media(max-width:700px){body{padding:10px}.layout{grid-template-columns:minmax(0,1fr)}header{align-items:flex-start}h1{font-size:22px}.toolbar button{font-size:12px;padding:7px}.boardwrap svg{max-height:400px;min-height:260px}.side{display:grid;grid-template-columns:1fr 1fr}.scores{grid-column:1/-1}.side .supplypanel{grid-row:span 2}.section{padding:9px}.tokens{gap:4px}.token{min-height:64px}.token svg{height:33px}.side .logpanel{grid-column:1/-1}#log{height:65px}.footer{display:block}.boardtop{padding:9px}.formrow{grid-template-columns:110px 1fr}}@media(max-width:420px){.side{display:flex}.boardwrap svg{max-height:340px}.token{flex-direction:row;justify-content:center;min-height:50px}header .toolbar{max-width:112px}h1{font-size:21px}}
+</style></head><body>
+<header><div><div class="eyebrow">ARENA CIRCLE / PRACTICE</div><h1>아레나 서클 연습실</h1><p class="muted">회전을 읽고, 다음 한 수를 생각합니다.</p></div><div class="toolbar"><button id="newBtn">새 게임</button><button id="downloadBtn">HTML 저장</button></div></header>
+<div class="notice"><b>PDF 기반 비공식 연습판입니다.</b> 원형 청록색 게임판과 색·크기가 다른 말을 재현했습니다. 정확한 격자·말 수·점수표는 미확인 상태이므로, 아래에 공개한 연습용 가정을 사용합니다.</div>
+<main class="layout"><section class="panel"><div class="boardtop"><div><b id="turnLabel">1번째 차례</b><div class="muted" id="directionLabel">열린 통로는 아래쪽에 있습니다.</div></div><span class="tag" id="modeLabel">컴퓨터와 연습</span></div><div class="boardwrap"><svg id="board" viewBox="0 0 640 640" role="group" aria-label="아레나 서클 게임판"></svg></div><div class="boardbottom"><div id="status" role="status" aria-live="polite"></div><div class="controls"><button id="hintBtn">추천 수</button><button id="undoBtn">되돌리기</button><button id="previewBtn">다음 90° 미리보기</button><label><input type="checkbox" id="showLegal" checked>놓을 자리 표시</label></div><div id="hint" aria-live="polite"></div></div></section>
+<aside class="side"><div class="scores" id="scores"></div><section class="panel section supplypanel"><div class="rowhead"><h2>놓을 말을 선택하세요.</h2><span id="remaining" class="muted"></span></div><div class="tokens" id="tokens"></div><p class="muted">말은 두 사람이 함께 사용하는 공용 말입니다.</p></section><section class="panel section"><div class="rowhead"><h2>찬스카드를 사용합니다.</h2><span class="tag" id="cardCount">4장</span></div><p class="muted">현재 차례에 중앙판을 90° 더 돌립니다.</p><button class="full" id="chanceBtn">찬스 사용 · 시계 방향 90°</button><button id="passBtn" class="full" hidden style="margin-top:6px">놓을 곳이 없으므로 차례를 넘깁니다.</button></section><section class="panel section logpanel"><div class="rowhead"><h2>진행 기록</h2><button id="lessonBtn" style="font-size:11px;padding:4px 7px">줄 완성 문제</button></div><ol id="log"></ol></section></aside></main>
+<details id="rules"><summary>규칙 · 구현 가정 · 출처를 확인합니다.</summary><div class="rulebody"><h3>PDF에서 확인한 기본 규칙입니다.</h3><ol><li>첫 사람은 회전 없이 말 하나를 놓습니다. 이후에는 차례가 바뀔 때마다 중앙판을 시계 방향으로 90° 돌린 뒤 말을 놓습니다. 앱은 이 기본 회전을 자동으로 처리합니다.</li><li>열린 통로 방향에서 접근했을 때, 중앙 기둥이나 가장 먼저 만나는 말의 바로 앞 빈칸에만 놓습니다. 파란 테두리 칸이 현재 가능한 자리입니다.</li><li>같은 색 또는 같은 크기의 말 3개를 가로·세로·대각선으로 연결하면 완성한 줄의 말을 가져갑니다.</li><li>찬스카드를 한 사람당 4장 받으며, 자신의 차례에 추가 회전에 사용할 수 있습니다. 공용 말을 다 쓰면 게임이 끝납니다.</li></ol><h3>이 앱에서 채택한 가정이며, 공식 확정 규칙이 아닙니다.</h3><ul><li>원형 11×11 격자와 중앙 기둥 1개를 사용합니다. 정확한 실물 칸 배치·통로 구조를 검증한 디지털 복제판은 아닙니다. 열린 통로는 화면 아래에 고정하고, 중앙판과 그 위의 말을 함께 회전시킵니다.</li><li>빨강·초록·노랑과 크기 번호 4·5·6을 조합한 9종을 공용으로 사용합니다. 기본 말 수는 종류별 6개, 총 54개입니다. 새 게임에서 종류별 개수를 바꿀 수 있습니다.</li><li>기본 점수는 획득한 말의 번호 합입니다. PDF에 정확한 점수표가 없어 채택한 가정입니다. 새 게임에서 말 1개당 1점으로 바꿀 수 있습니다.</li><li>3개 이상 연속한 줄 전체를 가져갑니다. 여러 줄을 동시에 완성하면 합집합을 가져가며 교차한 말은 한 번만 셉니다. 중앙 기둥이나 빈칸을 가로질러 연결하지 않습니다.</li><li>찬스카드는 장당 추가 90° 회전으로 통일하고 한 차례에 한 장만 허용합니다. 실제 카드별 각도·효과는 PDF 텍스트에서 확인되지 않았습니다.</li><li>둘 곳이 없으면 차례를 넘길 수 있으며, 네 차례 연속으로 놓지 못하면 남은 말을 제외하고 현재 점수로 종료합니다. 앱의 진행 막힘 방지 규칙입니다.</li><li>PDF 19쪽의 2 대 2 변형게임은 구현하지 않았습니다. 컴퓨터와 연습하거나 한 기기에서 2인이 번갈아 플레이합니다. 연습 문제는 앱 제작 예제이며 PDF 문제를 옮긴 것이 아닙니다.</li><li>컴퓨터는 즉시 획득 점수와 다음 상대 차례의 득점 가능성을 비교합니다. 완전 탐색이나 필승 전략을 제공하지는 않습니다.</li></ul><h3>참고한 자료입니다.</h3><p>주요 출처는 사용자가 제공한 <b>21. 아레나 서클 연수 ppt.pdf</b>입니다. 6~8쪽의 소개·구성·규칙과 11~15쪽의 게임판 그림을 참고했습니다.</p><p>웹 검색에서는 <a href="https://www.youtube.com/watch?v=CJFyrm28ZNk" target="_blank" rel="noopener noreferrer">게임 설명 영상 1</a>과 <a href="https://www.youtube.com/watch?v=kex8J2GuiBk" target="_blank" rel="noopener noreferrer">게임 설명 영상 2</a>에 관한 검색 결과를 보조로 확인했습니다. 영상 전체를 직접 검증한 것은 아닙니다. 검색 결과의 카드 각도 설명과 PDF가 달라 PDF의 기본 진행을 우선했습니다.</p><p>브라우저 저장소를 사용할 수 있으면 진행 상황을 자동 저장합니다. 공유 서버나 외부 통신은 사용하지 않습니다. HTML 저장 버튼으로 내려받는 파일에는 코드가 포함되며, 내려받을 당시의 대국 상태는 포함하지 않습니다.</p></div></details>
+<div class="footer"><span>학습용 비공식 구현이며 원작자·제작사의 공식 서비스가 아닙니다.</span><span id="saveStatus">외부 라이브러리 없이 실행합니다.</span></div>
+<div class="overlay" id="setup" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="setupTitle"><h2 id="setupTitle">새 연습을 시작합니다.</h2><p class="muted">시작하면 현재 대국을 대체합니다.</p><div class="formrow"><label for="mode">연습 방식</label><select id="mode"><option value="ai">컴퓨터와 연습</option><option value="local">한 기기에서 2인</option></select></div><div class="formrow"><label for="difficulty">컴퓨터 전략</label><select id="difficulty"><option value="normal">다음 차례까지 고려합니다.</option><option value="easy">현재 득점을 우선합니다.</option></select></div><div class="formrow"><label for="copies">종류별 말 수</label><select id="copies"><option value="6">6개씩 사용합니다.</option><option value="4">4개씩 사용합니다.</option><option value="3">3개씩 사용합니다.</option></select></div><div class="formrow"><label for="scoring">점수 계산 가정</label><select id="scoring"><option value="number">말 번호를 합산합니다.</option><option value="count">말 1개를 1점으로 셉니다.</option></select></div><p class="muted">말 수와 점수 계산은 실물 규칙을 확정한 설정이 아닙니다.</p><div class="toolbar"><button id="cancelBtn">취소합니다.</button class="primary" id="startBtn">게임을 시작합니다.</button></div></section></div>
+<script>
+// ENGINE_START
+const N = 11, MID = 5;
+const COLORS = ['red', 'green', 'yellow'];
+const COLOR_NAME = {red:'빨강', green:'초록', yellow:'노랑'};
+const FILL = {red:'#c94b50', green:'#23896a', yellow:'#e1b338'};
+const DARK = {red:'#963139', green:'#15634d', yellow:'#ad8521'};
+const TYPES = COLORS.flatMap(c => [4,5,6].map(v => ({c,v})));
+const id = (x,y) => y*N+x;
+const inside = (x,y) => x>=0 && x<N && y>=0 && y<N && (x-MID)**2+(y-MID)**2<=30;
+const center = i => i===id(MID,MID);
+function fresh(cfg={}) {
+  const config = Object.assign({mode:'ai', difficulty:'normal', copies:6, scoring:'number'},cfg);
+  return {config, board:Array(N*N).fill(null), supply:TYPES.map(()=>Number(config.copies)), scores:[0,0], captured:[[],[]], cards:[4,4], player:0, turn:1, angle:0, used:false, selected:0, ended:false, passes:0, lesson:'', log:['첫 차례에는 회전하지 않고 말을 놓습니다.']};
+}
+function rotateBoard(board,q=1) {
+  let b=board.slice();
+  for(let k=0;k<q;k++) {
+    const out=Array(N*N).fill(null);
+    for(let y=0;y<N;y++) {
+      for(let x=0;x<N;x++) out[id(N-1-y,x)]=b[id(x,y)];
+    }
+    b=out;
+  }
+  return b;
+}
+function legal(board) {
+  const a=[];
+  for(let x=0;x<N;x++) {
+    let previous=-1;
+    for(let y=N-1;y>=0;y--) {
+      if(!inside(x,y)) continue;
+      const i=id(x,y);
+      if(center(i)||board[i]!==null) {
+        if(previous>=0) a.push(previous);
+        break;
+      }
+      previous=i;
+    }
+  }
+  return a;
+}
+function matches(board,at) {
+  if(board[at]===null) return [];
+  const tile=TYPES[board[at]], x=at%N, y=Math.floor(at/N), found=new Set();
+  for(const [dx,dy] of [[1,0],[0,1],[1,1],[1,-1]]) {
+    for(const attr of ['c','v']) {
+      const group=[at];
+      for(const sign of [-1,1]) {
+        let xx=x+sign*dx, yy=y+sign*dy;
+        while(inside(xx,yy)) {
+          const j=id(xx,yy);
+          if(center(j)||board[j]===null||TYPES[board[j]][attr]!==tile[attr]) break;
+          group.push(j); xx+=sign*dx; yy+=sign*dy;
+        }
+      }
+      if(group.length>=3) group.forEach(j=>found.add(j));
+    }
+  }
+  return [...found];
+}
+function points(pieces,config) {
+  return pieces.reduce((sum,t)=>sum+(config.scoring==='count'?1:TYPES[t].v),0);
+}
+function simulate(board,supply,at,t,config) {
+  const b=board.slice(), s=supply.slice();
+  b[at]=t; s[t]--;
+  const hits=matches(b,at), pieces=hits.map(i=>b[i]);
+  hits.forEach(i=>b[i]=null);
+  return {board:b, supply:s, hits, pieces, gain:points(pieces,config)};
+}
+function candidates(board,supply,config) {
+  const list=[];
+  for(const at of legal(board)) {
+    for(let t=0;t<TYPES.length;t++) {
+      if(supply[t]>0) {
+        const sim=simulate(board,supply,at,t,config);
+        let pairs=0;
+        const x=at%N,y=Math.floor(at/N);
+        for(const [dx,dy] of [[-1,0],[1,0],[0,-1],[0,1],[-1,-1],[1,1],[-1,1],[1,-1]]) {
+          const xx=x+dx,yy=y+dy;
+          if(inside(xx,yy)) {
+            const v=sim.board[id(xx,yy)];
+            if(v!==null&&(TYPES[v].c===TYPES[t].c||TYPES[v].v===TYPES[t].v)) pairs++;
+          }
+        }
+        list.push({at,t,sim,rank:sim.gain*10+pairs*0.15});
+      }
+    }
+  }
+  return list.sort((a,b)=>b.rank-a.rank||a.at-b.at||a.t-b.t);
+}
+function choose(state) {
+  let pool=[];
+  const rotations=(state.cards[state.player]>0&&!state.used)?[0,1]:[0];
+  for(const q of rotations) {
+    const b=q?rotateBoard(state.board):state.board;
+    const a=candidates(b,state.supply,state.config).slice(0,state.config.difficulty==='normal'?12:1);
+    for(const move of a) {
+      let risk=0;
+      if(state.config.difficulty==='normal') {
+        const next=rotateBoard(move.sim.board);
+        const replies=candidates(next,move.sim.supply,state.config);
+        risk=replies.length?replies[0].sim.gain:0;
+        if(state.cards[1-state.player]>0) {
+          const extra=candidates(rotateBoard(next),move.sim.supply,state.config);
+          if(extra.length) risk=Math.max(risk,extra[0].sim.gain);
+        }
+      }
+      pool.push(Object.assign({},move,{q,risk,value:move.sim.gain-risk*0.8-q*1.2+move.rank*0.001}));
+    }
+  }
+  pool.sort((a,b)=>b.value-a.value||a.q-b.q||a.at-b.at||a.t-b.t);
+  return pool[0]||null;
+}
+// ENGINE_END
+
+const $ = s=>document.getElementById(s);
+const KEY='arena-circle-practice-v1';
+let state=fresh(), history=[], preview=false, hintMove=null, aiTimer=null, lessonIndex=0, focusBefore=null;
+function clone(v) {return JSON.parse(JSON.stringify(v));}
+function valid(s) {
+  return s&&s.config&&['ai','local'].includes(s.config.mode)&&['normal','easy'].includes(s.config.difficulty)&&[3,4,6].includes(Number(s.config.copies))&&['number','count'].includes(s.config.scoring)&&Array.isArray(s.board)&&s.board.length===121&&s.board.every((v,i)=>(v===null||(Number.isInteger(v)&&v>=0&&v<9&&inside(i%11,Math.floor(i/11))&&!center(i))))&&Array.isArray(s.supply)&&s.supply.length===9&&s.supply.every(n=>Number.isInteger(n)&&n>=0&&n<=6)&&Array.isArray(s.cards)&&s.cards.length===2&&s.cards.every(n=>Number.isInteger(n)&&n>=0&&n<=4)&&Array.isArray(s.scores)&&s.scores.length===2&&s.scores.every(n=>Number.isFinite(n)&&n>=0)&&Array.isArray(s.captured)&&s.captured.length===2&&s.captured.every(a=>Array.isArray(a)&&a.every(t=>Number.isInteger(t)&&t>=0&&t<9))&&[0,1].includes(s.player)&&Number.isInteger(s.turn)&&s.turn>0&&[0,90,180,270].includes(s.angle)&&typeof s.used==='boolean'&&typeof s.ended==='boolean'&&Number.isInteger(s.selected)&&s.selected>=0&&s.selected<9&&Number.isInteger(s.passes)&&s.passes>=0&&typeof s.lesson==='string'&&Array.isArray(s.log)&&s.log.every(x=>typeof x==='string');
+}
+try {
+  const saved=JSON.parse(localStorage.getItem(KEY));
+  if(valid(saved)) state=saved;
+} catch(e) {}
+function save() {
+  try {localStorage.setItem(KEY,JSON.stringify(state));$('saveStatus').textContent='진행 상황을 이 브라우저에 자동 저장했습니다.';}
+  catch(e) {$('saveStatus').textContent='이 환경에서는 자동 저장을 사용할 수 없습니다.';}
+}
+function name(p) {return p===0?(state.config.mode==='ai'?'나':'플레이어 1'):(state.config.mode==='ai'?'컴퓨터':'플레이어 2');}
+function label(i) {return String.fromCharCode(65+i%N)+(Math.floor(i/N)+1);}
+function human() {return !state.ended&&!(state.config.mode==='ai'&&state.player===1)&&!preview;}
+function record(text) {state.log.push(text);if(state.log.length>100)state.log.shift();}
+function snapshot(kind) {history.push({state:clone(state),who:state.player,kind});if(history.length>100)history.shift();}
+function esc(s) {return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function chip(t,x,y,scale=1) {
+  const o=TYPES[t],r=(10+(o.v-4)*1.6)*scale,h=(7+(o.v-4)*3)*scale;
+  return `<g pointer-events="none"><path d="M${x-r},${y-h}v${h}a${r},${r*.48} 0 0 0 ${r*2},0v-${h}" fill="${DARK[o.c]}"/><ellipse cx="${x}" cy="${y-h}" rx="${r}" ry="${r*.55}" fill="${FILL[o.c]}" stroke="${DARK[o.c]}" stroke-width="${.8*scale}"/><text x="${x}" y="${y-h+3.2*scale}" font-size="${10*scale}" font-weight="700" text-anchor="middle" fill="${o.c==='yellow'?'#30250b':'#fff'}">${o.v}</text></g>`;
+}
+function drawBoard() {
+  const b=preview?rotateBoard(state.board):state.board, moves=legal(b), angle=(state.angle+(preview?90:0))%360;
+  let svg='<title>원형 게임판입니다. 열린 통로는 아래쪽이며, 파란 칸에 선택한 말을 놓습니다.</title>';
+  svg+='<circle cx="320" cy="305" r="288" fill="#e2eef0" stroke="#a4c0c5" stroke-width="2"/><circle cx="320" cy="305" r="236" fill="#286775"/><circle cx="320" cy="305" r="218" fill="#bee1e5" stroke="#174c58" stroke-width="2"/>';
+  for(let t=0;t<9;t++) {
+    for(let k=0;k<Number(state.config.copies);k++) {
+      const count=9*Number(state.config.copies),a=((t*Number(state.config.copies)+k)/count*360-90)*Math.PI/180;
+      const x=320+264*Math.cos(a), y=305+264*Math.sin(a);
+      svg+=`<ellipse cx="${x}" cy="${y}" rx="11" ry="8" fill="#c5dadd" stroke="#a6c4ca"/>`;
+      if(k<state.supply[t])svg+=chip(t,x,y+3,.74);
+    }
+  }
+  const letters=['A','B','C','D'];
+  for(let k=0;k<4;k++) {
+    const a=(k*90+angle-90)*Math.PI/180;
+    svg+=`<text x="${320+227*Math.cos(a)}" y="${310+227*Math.sin(a)}" text-anchor="middle" fill="white" font-size="14" font-weight="600">${letters[k]}</text>`;
+  }
+  for(let y=0;y<N;y++) {
+    for(let x=0;x<N;x++) {
+      if(!inside(x,y))continue;
+      const i=id(x,y),cx=320+(x-MID)*34,cy=305+(y-MID)*34;
+      if(center(i)) {
+        svg+=`<path d="M${cx-14},${cy-17}v24a14,7 0 0 0 28,0v-24" fill="#466773"/><ellipse cx="${cx}" cy="${cy-17}" rx="14" ry="8" fill="#74909b" stroke="#3b5964"/><text x="${cx}" y="${cy+24}" fill="#345762" text-anchor="middle" font-size="9">기둥</text>`;
+        continue;
+      }
+      const possible=moves.includes(i),shown=possible&&$('showLegal').checked&&!state.ended;
+      const isHint=hintMove&&!preview&&hintMove.q===0&&hintMove.at===i;
+      svg+=`<g ${possible&&human()?`role="button" tabindex="0" data-cell="${i}" aria-label="${label(i)}에 ${COLOR_NAME[TYPES[state.selected].c]} ${TYPES[state.selected].v}번 말을 놓습니다."`:''}><rect class="spot" x="${cx-15}" y="${cy-15}" width="30" height="30" rx="3" fill="${isHint?'#bfd6ff':shown?'#edf6ff':'#b9dce0'}" stroke="${isHint?'#173e9c':shown?'#3975b9':'#99c6cd'}" stroke-width="${shown||isHint?2:1}"/>`;
+      if(shown&&b[i]===null)svg+=`<text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="9" fill="#35629a" pointer-events="none">${label(i)}</text>`;
+      if(b[i]!==null)svg+=chip(b[i],cx,cy+7,1);
+      svg+='</g>';
+    }
+  }
+  svg+='<path d="M279 517 Q320 531 361 517" fill="none" stroke="#f8fbfc" stroke-width="18"/><path d="M320 555v-29m-8 9 8-9 8 9" fill="none" stroke="#174e5d" stroke-width="2"/><rect x="241" y="572" width="158" height="24" fill="#f8fbfc"/><text x="320" y="589" text-anchor="middle" font-size="13" fill="#264f5c">열린 통로 · 여기서 접근</text><text x="320" y="619" text-anchor="middle" font-size="11" fill="#607b86">원형 격자와 말 수는 연습용으로 근사했습니다.</text>';
+  $('board').innerHTML=svg;
+}
+function render() {
+  if(state.supply[state.selected]===0) {
+    const t=state.supply.findIndex(n=>n>0);if(t>=0)state.selected=t;
+  }
+  $('turnLabel').textContent=state.ended?'연습이 끝났습니다.':`${state.turn}번째 차례 · ${name(state.player)}`;
+  $('directionLabel').textContent=preview?'다음 90° 회전 후의 모습입니다. 실제 대국은 바뀌지 않습니다.':`중앙판은 ${state.angle}° 방향입니다. 열린 통로는 아래쪽입니다.`;
+  $('modeLabel').textContent=state.lesson?'줄 완성 연습':state.config.mode==='ai'?'컴퓨터와 연습':'2인 번갈아 연습';
+  $('remaining').textContent=`${state.supply.reduce((a,b)=>a+b,0)}개가 남았습니다.`;
+  $('scores').innerHTML=[0,1].map(p=>`<div class="score ${p===state.player&&!state.ended?'active':''}"><div class="name">${name(p)}${p===state.player&&!state.ended?' · 현재 차례':''}</div><strong>${state.scores[p]}</strong> <span class="muted">점</span><div class="cards">${state.captured[p].length}개를 획득했고, 카드 ${state.cards[p]}장이 남았습니다.</div></div>`).join('');
+  $('tokens').innerHTML=TYPES.map((o,t)=>`<button class="token ${t===state.selected?'selected':''}" data-token="${t}" aria-pressed="${t===state.selected}" aria-label="${COLOR_NAME[o.c]} ${o.v}번, ${state.supply[t]}개 남음" ${!human()||!state.supply[t]?'disabled':''}><svg viewBox="0 0 50 42" aria-hidden="true">${chip(t,25,33,1.45)}</svg><span>${COLOR_NAME[o.c]} ${o.v} · ${state.supply[t]}개</span></button>`).join('');
+  $('chanceBtn').disabled=!human()||state.used||state.cards[state.player]===0;
+  $('cardCount').textContent=`${state.cards[state.player]}장이 남았습니다.`;
+  $('hintBtn').disabled=!human();$('undoBtn').disabled=!history.length;
+  $('previewBtn').disabled=state.ended||(state.config.mode==='ai'&&state.player===1);
+  $('previewBtn').textContent=preview?'현재 판으로 돌아오기':'다음 90° 미리보기';
+  $('passBtn').hidden=!human()||legal(state.board).length>0;
+  let status='';
+  if(state.ended) {
+    const a=state.scores[0],b=state.scores[1];
+    status=state.lesson?'줄 완성 연습을 마쳤습니다. 새 게임으로 실전에 도전하세요.':a===b?`두 사람 모두 ${a}점으로 비겼습니다.`:`${name(a>b?0:1)}의 승리입니다. 최종 점수는 ${a} 대 ${b}입니다.`;
+  } else if(preview) status='회전 예상 화면입니다. 현재 판으로 돌아오면 말을 놓을 수 있습니다.';
+  else if(!human())status='컴퓨터가 회전 후의 자리와 득점 가능성을 살펴보고 있습니다.';
+  else if(!legal(state.board).length)status='놓을 수 있는 자리가 없습니다. 찬스카드를 사용하거나 차례를 넘기세요.';
+  else status=state.lesson||`${COLOR_NAME[TYPES[state.selected].c]} ${TYPES[state.selected].v}번 말을 선택했습니다. ${legal(state.board).length}개의 가능한 자리 중 하나를 누르세요.`;
+  $('status').textContent=status;
+  $('log').innerHTML=state.log.slice(-16).reverse().map(s=>`<li>${esc(s)}</li>`).join('');
+  drawBoard();save();
+}
+function clearHint() {hintMove=null;$('hint').textContent='';}
+function advance() {
+  if(!state.supply.some(n=>n>0)||state.passes>=4) {
+    state.ended=true;record(state.passes>=4?'네 차례 연속으로 놓지 못해 현재 점수로 종료합니다.':'공용 말을 모두 사용해 종료합니다.');return;
+  }
+  state.player=1-state.player;state.turn++;state.used=false;
+  state.board=rotateBoard(state.board);state.angle=(state.angle+90)%360;
+  record(`${name(state.player)}의 차례를 시작하며 중앙판을 시계 방향으로 90° 돌렸습니다.`);
+}
+function place(at,computer=false) {
+  if((!computer&&!human())||state.ended||!legal(state.board).includes(at)||state.supply[state.selected]<=0)return;
+  snapshot('place');clearHint();
+  const t=state.selected,r=simulate(state.board,state.supply,at,t,state.config);
+  state.board=r.board;state.supply=r.supply;state.scores[state.player]+=r.gain;state.captured[state.player].push(...r.pieces);state.passes=0;
+  record(`${name(state.player)}이(가) ${label(at)}에 ${COLOR_NAME[TYPES[t].c]} ${TYPES[t].v}번을 놓았습니다.${r.hits.length?` ${r.hits.length}개를 가져가 ${r.gain}점을 얻었습니다.`:''}`);
+  if(state.lesson) {
+    if(r.hits.length) {state.ended=true;record('목표한 줄을 완성했습니다.');}
+    else {$('hint').textContent='아직 줄이 완성되지 않았습니다. 되돌리기로 다시 시도해 보세요.';}
+  } else advance();
+  render();scheduleAI();
+}
+function chance(computer=false) {
+  if((!computer&&!human())||state.ended||state.used||state.cards[state.player]<=0)return;
+  snapshot('chance');state.board=rotateBoard(state.board);state.angle=(state.angle+90)%360;state.cards[state.player]--;state.used=true;clearHint();
+  record(`${name(state.player)}이(가) 찬스카드 1장으로 중앙판을 90° 더 돌렸습니다.`);render();
+}
+function pass(computer=false) {
+  if((!computer&&!human())||state.ended||legal(state.board).length)return;
+  snapshot('pass');record(`${name(state.player)}은(는) 놓을 자리가 없어 차례를 넘겼습니다.`);state.passes++;clearHint();advance();render();scheduleAI();
+}
+function scheduleAI() {
+  clearTimeout(aiTimer);
+  if(state.config.mode!=='ai'||state.player!==1||state.ended||state.lesson)return;
+  aiTimer=setTimeout(()=>{
+    const move=choose(state);
+    if(!move) {pass(true);return;}
+    if(move.q)chance(true);
+    state.selected=move.t;place(move.at,true);
+  },400);
+}
+$('board').addEventListener('click',e=>{const el=e.target.closest('[data-cell]');if(el)place(Number(el.dataset.cell));});
+$('board').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const el=e.target.closest('[data-cell]');if(el){e.preventDefault();place(Number(el.dataset.cell));}}});
+$('tokens').addEventListener('click',e=>{const el=e.target.closest('[data-token]');if(el&&human()){state.selected=Number(el.dataset.token);clearHint();render();}});
+$('chanceBtn').onclick=()=>chance();$('passBtn').onclick=()=>pass();$('showLegal').onchange=drawBoard;
+$('previewBtn').onclick=()=>{preview=!preview;clearHint();render();};
+$('undoBtn').onclick=()=>{
+  if(!history.length)return;clearTimeout(aiTimer);
+  let entry=history.pop();
+  if(state.config.mode==='ai'&&entry.who===1) {
+    while(history.length&&entry.who===1)entry=history.pop();
+  }
+  state=entry.state;preview=false;clearHint();render();scheduleAI();
+};
+$('hintBtn').onclick=()=>{
+  if(!human())return;
+  const move=choose(state);hintMove=move;
+  if(!move){$('hint').textContent='추가 90° 회전을 포함해도 놓을 자리가 없습니다. 차례를 넘겨 보세요.';return;}
+  state.selected=move.t;
+  $('hint').textContent=`${move.q?'찬스카드로 90° 더 돌린 뒤, ':''}${label(move.at)}에 ${COLOR_NAME[TYPES[move.t].c]} ${TYPES[move.t].v}번 말을 놓는 수를 제안합니다. 즉시 예상 점수는 ${move.sim.gain}점입니다.${state.config.difficulty==='normal'?` 상대의 다음 차례 최대 즉시 득점 예상은 ${move.risk}점입니다.`:''} 제한된 탐색 결과이며 최선의 수를 보장하지 않습니다.`;render();
+};
+function openSetup() {
+  focusBefore=document.activeElement;
+  for(const k of ['mode','difficulty','copies','scoring'])$(k).value=state.config[k];
+  $('setup').hidden=false;$('mode').focus();
+}
+function closeSetup() {$('setup').hidden=true;if(focusBefore)focusBefore.focus();}
+$('newBtn').onclick=openSetup;$('cancelBtn').onclick=closeSetup;
+$('setup').addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeSetup();
+  if(e.key==='Tab') {
+    const els=[...$('setup').querySelectorAll('button,select')],first=els[0],last=els[els.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+  }
+});
+$('startBtn').onclick=()=>{
+  clearTimeout(aiTimer);const cfg={};for(const k of ['mode','difficulty','copies','scoring'])cfg[k]=$(k).value;cfg.copies=Number(cfg.copies);
+  state=fresh(cfg);history=[];preview=false;clearHint();closeSetup();render();
+};
+$('lessonBtn').onclick=()=>{
+  clearTimeout(aiTimer);snapshot('lesson');const cfg=Object.assign({},state.config,{mode:'local'});state=fresh(cfg);preview=false;clearHint();lessonIndex++;
+  const placements=lessonIndex%2?[[4,4,0],[5,4,1],[6,3,4]]:[[3,5,0],[4,6,3],[5,6,7]];
+  for(const [x,y,t] of placements){state.board[id(x,y)]=t;state.supply[t]--;}
+  state.cards=[0,0];
+  state.lesson=lessonIndex%2?'빨강 말로 가로 한 줄을 완성해 보세요.':'색이 달라도 크기가 같으면 됩니다. 4번 말로 대각선 줄을 완성해 보세요.';
+  if(lessonIndex%2)state.lesson='빨강 말로 가로 한 줄을 완성해 보세요.';
+  state.log=['앱 제작 연습 문제입니다. 찬스카드 없이 한 수로 줄을 완성해 보세요.'];render();
+};
+$('downloadBtn').onclick=()=>{
+  const copy=document.documentElement.cloneNode(true);
+  copy.querySelector('#setup').setAttribute('hidden','');
+  copy.querySelector('#board').innerHTML='';copy.querySelector('#tokens').innerHTML='';copy.querySelector('#scores').innerHTML='';copy.querySelector('#hint').textContent='';copy.querySelector('#log').innerHTML='';
+  const blob=new Blob(['<!DOCTYPE html>\n'+copy.outerHTML],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+  a.href=url;a.download='arena-circle-practice.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
+  $('saveStatus').textContent='HTML 파일 저장을 요청했습니다. 실행 환경에 따라 다운로드가 제한될 수 있습니다.';
+};
+render();scheduleAI();
+</script></body></html>
